@@ -15,6 +15,12 @@ const CounterHooks = () => {
   // Multiple calls to `useState` for multiple pieces of state
 
   // Use lazy initializer function to only call `getRandomCount` once
+  // lazy initilizer function is the arrow function instie the useState for the count
+  // it's optimizier
+  // read four character can optimize your react component
+  // avoid conditionally using State
+
+  // for lots of state you can useReducer
   const [count, setCount] = useState(() => getRandomCount())
   const [value, setValue] = useState('')
 
@@ -97,6 +103,8 @@ const ToggleHooks = ({ initialOn }) => {
 
   // use updater function since new state is computed
   // from previous state
+  // read the article in the api reference
+  // your next state depends on your current state
   const handleClick = () => setOn((prevOn) => !prevOn)
 
   return (
