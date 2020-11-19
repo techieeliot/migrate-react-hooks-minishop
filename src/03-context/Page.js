@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import Header from './Header'
 import SearchForm from './SearchForm'
 import Results from './Results'
 // 👇🏾 Uncomment to import the ThemeContext
-// import ThemeContext from './ThemeContext'
+import ThemeContext from './ThemeContext'
 import THEMES from './themes.json'
 import { getResults } from '../api'
 
@@ -14,6 +14,7 @@ const Page = ({ initialQuery, initialLimit }) => {
   const [results, setResults] = useState([])
 
   // 👇🏾 Call `useContext` to get the `theme`
+  const {theme} = useContext(ThemeContext)
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -34,7 +35,7 @@ const Page = ({ initialQuery, initialLimit }) => {
 
   return (
     // Replace "light" with the context theme 👇🏾
-    <main style={{ backgroundColor: THEMES.light.background }}>
+    <main style={{ backgroundColor: THEMES[theme].background }}>
       <Header />
       <SearchForm
         query={query}

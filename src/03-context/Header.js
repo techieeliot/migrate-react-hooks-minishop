@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 // 👇🏾 Uncomment to import the ThemeContext
-// import ThemeContext from './ThemeContext'
+import ThemeContext from './ThemeContext'
 import THEMES from './themes.json'
 
 const Switch = ({ value, onChange }) => (
@@ -25,7 +25,7 @@ const Switch = ({ value, onChange }) => (
 
 const Header = () => {
   // 👇🏾 Replace with `useContext` to get the `theme` & `setTheme`
-  const theme = 'light'
+  const {theme, setTheme} = useContext(ThemeContext)
 
   return (
     <header
@@ -40,6 +40,7 @@ const Header = () => {
         value={theme}
         onChange={(newTheme) => {
           // 👈🏾 Update theme by calling `setTheme` from context
+          setTheme(newTheme)
         }}
       />
     </header>
