@@ -4,7 +4,8 @@ import Nav from '../../Nav'
 
 const ClockHooks = ({ tickAmount }) => {
   const [time, setTime] = useState(() => new Date())
-
+  // Read the helper functions blog
+  // add eslint extension to know which dependencies you need to add into your array on useEffect
   useEffect(() => {
     const intervalId = window.setInterval(() => {
       setTime(new Date())
@@ -14,6 +15,7 @@ const ClockHooks = ({ tickAmount }) => {
       window.clearInterval(intervalId)
     }
   }, [tickAmount])
+
 
   return <p>The time is {time.toLocaleTimeString()}.</p>
 }
@@ -83,12 +85,14 @@ const CounterHooks = ({ cacheKey, label }) => {
   // effect will be called: only when `count` or `cacheKey`
   // change
   useEffect(() => {
+    console.log(`setting local stoarge`, cacheKey, count)
     window.localStorage.setItem(cacheKey, count)
   }, [cacheKey, count])
-
+  
   // separate `useEffect` calls which are handling
-  // different effects
+  // different effects (multiple small ones are better)
   useEffect(() => {
+    console.log(`setting label`, label)
     document.title = label
   }, [label])
 

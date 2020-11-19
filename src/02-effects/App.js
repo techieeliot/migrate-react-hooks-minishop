@@ -1,4 +1,4 @@
-import React, { Component /*, useState, useEffect*/ } from 'react'
+import React, { Component , useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getResults } from '../api'
 
@@ -59,101 +59,110 @@ const Results = ({ results }) => {
 
 // 👇🏾 Uncomment the function component to convert the class
 
-// const App = ({ initialQuery, initialLimit }) => {
-//   const [query, setQuery] = useState(initialQuery)
-//   const [limit, setLimit] = useState(initialLimit)
-//   const [results, setResults] = useState([])
+const App = ({ initialQuery, initialLimit }) => {
+  const [query, setQuery] = useState(initialQuery)
+  const [limit, setLimit] = useState(initialLimit)
+  const [results, setResults] = useState([])
 
-//   // 👇🏾 Add `useEffect` to call `getResults` and `setResults`
+  // 👇🏾 Add `useEffect` to call `getResults` and `setResults`
+  useEffect(()=> {
+    console.log('effect')
+   
+      getResults({query, limit}).then(
+        results => setResults(results),
+        err => console.error(err)  
+      ) 
+    
+  }, [query, limit])
 
-//   return (
-//     <main>
-//       <h1>Giphy Search!</h1>
+  return (
+    <main>
+      <h1>Giphy Search!</h1>
 
-//       <SearchForm
-//         query={query}
-//         limit={limit}
-//         onQueryChange={setQuery}
-//         onLimitChange={setLimit}
-//       />
+      <SearchForm
+        query={query}
+        limit={limit}
+        onQueryChange={setQuery}
+        onLimitChange={setLimit}
+      />
 
-//       <Results results={results} />
-//     </main>
-//   )
-// }
-// App.propTypes = {
-//   initialQuery: PropTypes.string,
-//   initialLimit: PropTypes.string,
-// }
-// App.defaultProps = {
-//   initialQuery: '',
-//   initialLimit: '12',
-// }
-
-class App extends Component {
-  static propTypes = {
-    initialQuery: PropTypes.string,
-    initialLimit: PropTypes.string,
-  }
-  static defaultProps = {
-    initialQuery: '',
-    initialLimit: '12',
-  }
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      query: props.initialQuery,
-      limit: props.initialLimit,
-      results: [],
-    }
-  }
-
-  // helper that does the fetch and state update
-  // a separate method is needed because it's called
-  // in both `componentDidMount` & `componentDidUpdate`
-  fetchResults() {
-    const { query, limit } = this.state
-
-    getResults({ query, limit }).then(
-      (results) => this.setState({ results }),
-      (err) => {
-        console.error(err)
-      },
-    )
-  }
-
-  componentDidMount() {
-    // get results on mount
-    this.fetchResults()
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { query, limit } = this.state
-
-    // get new results when `query` or `limit` state values change
-    if (prevState.query !== query || prevState.limit !== limit) {
-      this.fetchResults()
-    }
-  }
-
-  render() {
-    return (
-      <main>
-        <h1>Giphy Search!</h1>
-
-        <SearchForm
-          query={this.state.query}
-          limit={this.state.limit}
-          onQueryChange={(query) => this.setState({ query })}
-          onLimitChange={(limit) => this.setState({ limit })}
-        />
-
-        <Results results={this.state.results} />
-      </main>
-    )
-  }
+      <Results results={results} />
+    </main>
+  )
 }
+App.propTypes = {
+  initialQuery: PropTypes.string,
+  initialLimit: PropTypes.string,
+}
+App.defaultProps = {
+  initialQuery: '',
+  initialLimit: '12',
+}
+
+// class App extends Component {
+//   static propTypes = {
+//     initialQuery: PropTypes.string,
+//     initialLimit: PropTypes.string,
+//   }
+//   static defaultProps = {
+//     initialQuery: '',
+//     initialLimit: '12',
+//   }
+
+//   constructor(props) {
+//     super(props)
+
+//     this.state = {
+//       query: props.initialQuery,
+//       limit: props.initialLimit,
+//       results: [],
+//     }
+//   }
+
+//   // helper that does the fetch and state update
+//   // a separate method is needed because it's called
+//   // in both `componentDidMount` & `componentDidUpdate`
+//   fetchResults() {
+//     const { query, limit } = this.state
+
+//     getResults({ query, limit }).then(
+//       (results) => this.setState({ results }),
+//       (err) => {
+//         console.error(err)
+//       },
+//     )
+//   }
+
+//   componentDidMount() {
+//     // get results on mount
+//     this.fetchResults()
+//   }
+
+//   componentDidUpdate(prevProps, prevState) {
+//     const { query, limit } = this.state
+
+//     // get new results when `query` or `limit` state values change
+//     if (prevState.query !== query || prevState.limit !== limit) {
+//       this.fetchResults()
+//     }
+//   }
+
+//   render() {
+//     return (
+//       <main>
+//         <h1>Giphy Search!</h1>
+
+//         <SearchForm
+//           query={this.state.query}
+//           limit={this.state.limit}
+//           onQueryChange={(query) => this.setState({ query })}
+//           onLimitChange={(limit) => this.setState({ limit })}
+//         />
+
+//         <Results results={this.state.results} />
+//       </main>
+//     )
+//   }
+// }
 
 export default App
